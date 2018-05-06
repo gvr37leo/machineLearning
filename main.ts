@@ -26,4 +26,3 @@ var seedgene = new Gene([
 var gene = network.train(seedgene,trainingSet.map(f => f.toArray()),trainingSet.map(f => f.type))
 Network.score(network.predict(gene,dataset.map(f => f.toArray())),dataset.map(f => f.type))
 
-https://github.com/gvr37leo/machineLearning.git
