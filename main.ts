@@ -16,13 +16,13 @@ var network = new Network(
 var seedgene = network.genBlankGene()
 
 var gene = network.train(seedgene,trainingSet.map(f => f.toArray()),trainingSet.map(f => f.type))
-var score = Network.score(network.predict(gene,dataset.map(f => f.toArray())),dataset.map(f => f.type))
+var score = Network.scoreList(network.predictList(gene,dataset.map(f => f.toArray())),dataset.map(f => f.type))
 
 console.log(score)
 console.log(gene)
 
 var flower = Flower.generateFlowers(1)[0]
-var prediction = network.predict(gene,[flower.toArray()])
+var prediction = network.predict(gene,flower.toArray())
 
 console.log(1)
 

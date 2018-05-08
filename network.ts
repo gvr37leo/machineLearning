@@ -31,7 +31,7 @@ class Network{
 
             for(var i = 0; i < pool.length; i++){
                 var gene = pool[i]
-                let score = Network.score(this.predict(gene,flowers),labels)
+                let score = Network.scoreList(this.predictList(gene,flowers),labels)
                 scores.push({
                     score:score,
                     gene:gene,
@@ -54,23 +54,18 @@ class Network{
 
     inputValues:number[]
 
-    predict(gene:Gene,flowers:number[][]):number[][]{
-        var predictions:number[][] = []
-        for(var flower of flowers){
-            var length = flower[0]
-            var leafsize = flower[1]
-
-            this.inputValues = [length,leafsize]
-
-            var rose = this.intergrate(2,gene)
-            var dandelion = this.intergrate(3,gene)
-
-            predictions.push([rose,dandelion])
-            // var total = rose + dandelion
-
-        }
-        return predictions
+    predictList(gene:Gene,flowers:number[][]):number[][]{
+        return flowers.map(f => this.predict(gene,f))
     }
+
+    predict(gene:Gene,flower:number[]):number[]{
+        var prediction:number[] = []
+        this.inputValues = flower
+        prediction = this.ins.map(v => this.intergrate(this.ins[v],gene))
+        return prediction
+    }
+
+
 
     intergrate(neuronIndex:number,gene:Gene):number{
         if(neuronIndex == this.ins[0]){
@@ -90,22 +85,16 @@ class Network{
         }
     }
 
-    static score(predictions:number[][],actual:number[]):number{
-        var scores:number[] = []
-
-        for(var i = 0; i < predictions.length; i++){
-            var prediction = predictions[i]
-            var rose = prediction[0]
-            var dandelion = prediction[1]
-
-            var total = rose + dandelion
-            var rosepercentile = rose / total
-            var dandelionpercetile = 1 - rosepercentile
-            var error = Math.abs(actual[i] - dandelionpercetile)
-            scores.push(-error) 
-        }
-
-        return scores.reduce((prev,cur,i,array) => prev + cur) / scores.length
+    static scoreList(predictions:number[][],actual:number[]):number{
+        return predictions.map((p, i) => Network.score(p,actual[i])).reduce((acc, val) => acc + val) / predictions.length
     }
+
+    static score(prediction:number[],actual:number):number{
+        var error:number = 0
+        error = prediction.reduce((acc,val) => acc + val)
+        error -= prediction[actual] + (1 - prediction[actual])
+        return -error
+    }
+    
 }
 
