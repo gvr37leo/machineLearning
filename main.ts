@@ -8,7 +8,7 @@ var trainingSet = Flower.generateFlowers(100)
 var dataset = Flower.generateFlowers(100)
 
 var network = new Network(
-    [[],[],[0,1],[0,1],[2,3,4],[2,3,4],[2,3,4]],
+    [[],[],[0,1],[0,1],[0,1],[2,3,4],[2,3,4]],
     [0,1],
     [5,6]
 )
@@ -18,7 +18,7 @@ var seedgene = new Gene([
     new Neuron([],0),
     new Neuron([1,1],0),
     new Neuron([1,1],0),
-    new Neuron([1,1,1],0),
+    new Neuron([1,1],0),
     new Neuron([1,1,1],0),
     new Neuron([1,1,1],0),
 ])

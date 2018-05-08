@@ -6,13 +6,14 @@ class Network{
     constructor(network:number[][],ins:number[],outs:number[]){
         this.ins = ins
         this.outs = outs
+        this.network = network
     }
 
     train(initalGene:Gene ,flowers:number[][],labels:number[]):Gene{
         var pool:Gene[] = []
         var poolsize = 100
         for(var i = 0; i < poolsize; i++){
-            pool.push(initalGene.copy())
+            pool.push(initalGene.reproduce())
         }
         var scores:{score:number,gene:Gene}[];
         for(var gen = 0; gen < 100; gen++){
@@ -26,7 +27,7 @@ class Network{
                     gene:gene,
                 })
             }
-            scores.sort((a,b) => a.score - b.score)//sould maybe be reversed
+            scores.sort((a,b) => b.score - a.score)//sould maybe be reversed
 
             scores.splice(10)
             pool = []

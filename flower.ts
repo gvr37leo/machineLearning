@@ -30,3 +30,7 @@ class Flower{
         return [this.length,this.leafSize]
     }
 }
+
+function coinflip(){
+    return Math.random() > 0.5
+}
