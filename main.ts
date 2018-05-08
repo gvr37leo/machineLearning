@@ -8,21 +8,21 @@ var trainingSet = Flower.generateFlowers(100)
 var dataset = Flower.generateFlowers(100)
 
 var network = new Network(
-    [[],[],[0,1],[0,1],[0,1],[2,3,4],[2,3,4]],
+    [[],[],[0,1],[0,1]],
     [0,1],
-    [5,6]
+    [0,1]
 )
 
-var seedgene = new Gene([
-    new Neuron([],0),
-    new Neuron([],0),
-    new Neuron([1,1],0),
-    new Neuron([1,1],0),
-    new Neuron([1,1],0),
-    new Neuron([1,1,1],0),
-    new Neuron([1,1,1],0),
-])
+var seedgene = network.genBlankGene()
 
 var gene = network.train(seedgene,trainingSet.map(f => f.toArray()),trainingSet.map(f => f.type))
-Network.score(network.predict(gene,dataset.map(f => f.toArray())),dataset.map(f => f.type))
+var score = Network.score(network.predict(gene,dataset.map(f => f.toArray())),dataset.map(f => f.type))
+
+console.log(score)
+console.log(gene)
+
+var flower = Flower.generateFlowers(1)[0]
+var prediction = network.predict(gene,[flower.toArray()])
+
+console.log(1)
 

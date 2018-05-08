@@ -9,6 +9,16 @@ class Network{
         this.network = network
     }
 
+    draw(ctx:CanvasRenderingContext2D,layers:number[],gene:Gene){
+        for(var layer of layers){
+            // ctx.ellipse(10,10)
+        }
+    }
+
+    genBlankGene():Gene{
+        return new Gene(this.network.map(v => new Neuron(new Array(v.length).fill(1),0)))
+    }
+
     train(initalGene:Gene ,flowers:number[][],labels:number[]):Gene{
         var pool:Gene[] = []
         var poolsize = 100
@@ -31,7 +41,7 @@ class Network{
 
             scores.splice(10)
             pool = []
-            pool.concat(scores.map(score => score.gene))
+            pool = pool.concat(scores.map(score => score.gene))
             for(let score of scores){
                 for(var i = 0; i < 9; i++){
                     pool.push(score.gene.reproduce())
@@ -52,8 +62,8 @@ class Network{
 
             this.inputValues = [length,leafsize]
 
-            var rose = this.intergrate(5,gene)
-            var dandelion = this.intergrate(6,gene)
+            var rose = this.intergrate(2,gene)
+            var dandelion = this.intergrate(3,gene)
 
             predictions.push([rose,dandelion])
             // var total = rose + dandelion
