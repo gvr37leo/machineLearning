@@ -9,10 +9,36 @@ class Network{
         this.network = network
     }
 
-    draw(ctx:CanvasRenderingContext2D,layers:number[],gene:Gene){
+    draw(ctx:CanvasRenderingContext2D,layers:number[][],gene:Gene){
+        var x = 0;
         for(var layer of layers){
-            // ctx.ellipse(10,10)
+            var y = 0;
+            for(var neuronIndex of layer){
+                var neuron = gene.neurons[neuronIndex]
+                ctx.ellipse(x * 100 + 100,y * 50 + 50,neuron.bias,neuron.bias,0,0,Math.PI * 2)
+                y++;
+            }
+            x++;
         }
+
+        for(var x = 1; x < layers.length;x++){
+            for(var y = 0; y < layers[x].length; y++){
+                var neuron = gene.neurons[y]
+
+                for(var weight of neuron.weights){
+                    this.line(ctx,new Vector2(x * 100 + 100,0),new Vector2(0,0),weight)
+                }
+            }
+        }
+
+    }
+
+    line(ctx:CanvasRenderingContext2D,a:Vector2,b:Vector2,width:number){
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineWidth = width;
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
     }
 
     genBlankGene():Gene{
@@ -37,7 +63,7 @@ class Network{
                     gene:gene,
                 })
             }
-            scores.sort((a,b) => b.score - a.score)//sould maybe be reversed
+            scores.sort((a,b) => a.score - b.score)
 
             scores.splice(10)
             pool = []
@@ -61,7 +87,7 @@ class Network{
     predict(gene:Gene,flower:number[]):number[]{
         var prediction:number[] = []
         this.inputValues = flower
-        prediction = this.ins.map(v => this.intergrate(this.ins[v],gene))
+        prediction = this.outs.map(index => this.intergrate(index,gene))
         return prediction
     }
 
@@ -91,9 +117,14 @@ class Network{
 
     static score(prediction:number[],actual:number):number{
         var error:number = 0
-        error = prediction.reduce((acc,val) => acc + val)
-        error -= prediction[actual] + (1 - prediction[actual])
-        return -error
+        for(var i = 0; i < prediction.length; i++){
+            if(i == actual){
+                error += 1 - prediction[i]
+            }else{
+                error += prediction[i]
+            }
+        }
+        return error
     }
     
 }

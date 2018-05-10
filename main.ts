@@ -3,15 +3,30 @@
 /// <reference path="neuron.ts" />
 /// <reference path="flower.ts" />
 /// <reference path="network.ts" />
+/// <reference path="plotter.ts" />
+
+
+
+
+var crret = createCanvas(500,500)
+var canvas = crret.canvas
+var ctxt = crret.ctxt
+
+
+
 
 var trainingSet = Flower.generateFlowers(100)
 var dataset = Flower.generateFlowers(100)
 
+
+
+
 var network = new Network(
     [[],[],[0,1],[0,1]],
     [0,1],
-    [0,1]
+    [2,3]
 )
+
 
 var seedgene = network.genBlankGene()
 
@@ -24,5 +39,5 @@ console.log(gene)
 var flower = Flower.generateFlowers(1)[0]
 var prediction = network.predict(gene,flower.toArray())
 
-console.log(1)
+network.draw(ctxt,[[]],gene)
 

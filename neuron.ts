@@ -3,7 +3,7 @@
 class Neuron{
     weights:number[]
     bias:number
-    mutationRate = 0.2
+    mutationRate = 0.9
 
     constructor(weights:number[], bias:number){
         this.weights = weights
