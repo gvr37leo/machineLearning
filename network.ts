@@ -1,12 +1,13 @@
 class Network{
     network:number[][]
-    ins:number[]
+    ins:Set<number>
     outs:number[]
 
     constructor(network:number[][],ins:number[],outs:number[]){
-        this.ins = ins
+        this.ins = new Set(ins)
         this.outs = outs
         this.network = network
+        
     }
 
     draw(ctx:CanvasRenderingContext2D,layers:number[][],gene:Gene){
@@ -94,10 +95,8 @@ class Network{
 
 
     intergrate(neuronIndex:number,gene:Gene):number{
-        if(neuronIndex == this.ins[0]){
-            return this.inputValues[0]
-        }else if(neuronIndex == this.ins[1]){
-            return this.inputValues[1]
+        if(this.ins.has(neuronIndex)){
+            return this.inputValues[neuronIndex]
         }else{
             var result = 0;
 
@@ -127,5 +126,19 @@ class Network{
         return error
     }
     
+    static genNetwork(layers:number[]):Network{
+        var network:number[][] = []
+
+        for(var i = 0; i < layers.length; i++){
+            network.push([])
+        }
+
+        for(var  i = 1; i < layers.length; i++){
+
+        }
+
+
+        return new Network(network,Array(layers[0]).fill(1).map((x, y) => x + y),[])
+    }
 }
 
