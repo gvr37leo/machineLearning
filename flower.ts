@@ -29,6 +29,10 @@ class Flower{
     toArray():number[]{
         return [this.length,this.leafSize]
     }
+
+    toVector():Vector2{
+        return new Vector2(this.length,this.leafSize)
+    }
 }
 
 function coinflip(){

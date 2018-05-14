@@ -4,10 +4,9 @@
   "description": "",
   "main": "package.js",
   "dependencies": {
-    "@types/amcharts": "^3.21.2",
-    "express": "^4.16.3",
+    "matrix2x": "^1.0.0",
     "utilsx": "^1.7.0",
-    "vectorx": "^2.0.0"
+    "vectorx": "^2.4.0"
   },
   "devDependencies": {},
   "scripts": {

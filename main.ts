@@ -11,21 +11,14 @@
 var crret = createCanvas(500,500)
 var canvas = crret.canvas
 var ctxt = crret.ctxt
-
+var plotter = new Plotter(new Vector2(-50,450),new Vector2(40,400))
 
 
 
 var trainingSet = Flower.generateFlowers(100)
 var dataset = Flower.generateFlowers(100)
+var network = Network.genNetwork([2,2])
 
-
-
-
-var network = new Network(
-    [[],[],[0,1],[0,1]],
-    [0,1],
-    [2,3]
-)
 
 
 var seedgene = network.genBlankGene()
@@ -39,5 +32,6 @@ console.log(gene)
 var flower = Flower.generateFlowers(1)[0]
 var prediction = network.predict(gene,flower.toArray())
 
-network.draw(ctxt,[[]],gene)
+plotter.draw(ctxt,dataset.map(f => f.toVector()),dataset.map(f => f.type),network,gene)
+// network.draw(ctxt,[[]],gene)
 

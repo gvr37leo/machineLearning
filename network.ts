@@ -128,17 +128,27 @@ class Network{
     
     static genNetwork(layers:number[]):Network{
         var network:number[][] = []
+        var neuronIndex = 0;
+        var neuronIndexes = []
 
-        for(var i = 0; i < layers.length; i++){
-            network.push([])
+        for(var  i = 0; i < layers.length; i++){
+            var layerSize = layers[i]
+            for(var j = 0; j < layerSize; j++){
+                network.push(neuronIndexes.slice())
+            }
+            neuronIndexes = range(neuronIndex,layerSize + neuronIndex)
+            neuronIndex += layerSize
         }
-
-        for(var  i = 1; i < layers.length; i++){
-
-        }
-
-
-        return new Network(network,Array(layers[0]).fill(1).map((x, y) => x + y),[])
+        return new Network(network,range(0,layers[0]),neuronIndexes)
     }
+
+
 }
 
+function range(from:number, to:number):number[]{
+    var result = []
+    for(var i = from; i < to; i++){
+        result.push(i)
+    }
+    return result
+}
