@@ -3,6 +3,7 @@
 
 
 class Plotter{
+    vp: Matrix;
     transform: Matrix;
     offset:Vector2
     zoom:Vector2
@@ -11,7 +12,10 @@ class Plotter{
         this.offset = offset
         this.zoom = zoom
 
-        this.transform = Matrix.canvasTransform(new Vector2(0,0),new Vector2(500,500))
+        var canvas = Matrix.canvasTransform(new Vector2(0,0),new Vector2(500,500))
+        var camera = Matrix.canvasCamera(new Vector2(4,0.5), new Vector2(11,1.5))
+        
+        this.transform = canvas.multM(camera)
     }
 
     draw(ctx:CanvasRenderingContext2D,dataPoints:Vector2[],labels:number[],network:Network,gene:Gene){
@@ -28,6 +32,7 @@ class Plotter{
             }
 
             var transformedPoint = this.transform.multV(datapoint.c())
+
             ctx.beginPath()
             ctx.ellipse(transformedPoint.x,transformedPoint.y,5,5,0,0,Math.PI * 2)
             ctx.fill()
